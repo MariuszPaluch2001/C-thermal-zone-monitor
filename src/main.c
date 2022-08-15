@@ -12,7 +12,7 @@ int main(int argc, char* argv[]){
 		printf("'%s' is not correct arg.\n", argv[1]);
 		return 2;
 	}
-	if (numb_thermal_zones > 100){
+	if (numb_thermal_zones > MAX_USER_ZONES_NUMB){
 		printf("%d args is too much.\n", numb_thermal_zones);
 		return 3;
 	}
