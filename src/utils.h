@@ -21,8 +21,8 @@ char * read_data(char * file_path){
 	FILE* fileptr;
 	fileptr = fopen(file_path, "r");
     	if (fileptr == NULL) {
-        	puts("file can not open \n");
-    		return 0;
+        	printf("File %s couldn't be opened.\n", file_path);
+    		exit(-1);
     	}
     	
     	char * buff = NULL;
