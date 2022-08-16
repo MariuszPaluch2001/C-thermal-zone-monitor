@@ -16,6 +16,9 @@ int main(int argc, char* argv[]){
 		printf("%d args is too much.\n", numb_thermal_zones);
 		return 3;
 	}
-	read_thermal_zone(0);
+	Thermal_Zone_Data *data = read_thermal_zone(0);
+	printf("Index: %d\n", data->index);
+	printf("Temp: %d\n", data->temp);
+	free(data);
 	return 0;
 }

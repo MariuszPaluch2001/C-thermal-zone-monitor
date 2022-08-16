@@ -12,17 +12,14 @@ void get_filename_idx(char* gen_filename, int index){
 	strcat(gen_filename, "/temp");		
 }
 
-struct thermal_zone_data{
-	int index;
-	double temp;
-	char * path;
-};
+typedef struct{
+	unsigned int index;
+	unsigned int temp;
+} Thermal_Zone_Data;
 
-unsigned int read_thermal_zone(int zone_index){
-	char path_thermal_zone[MAX_USER_ZONES_NUMB] = "/sys/class/thermal/thermal_zone";
-	get_filename_idx(path_thermal_zone, zone_index);
+char * read_data(char * file_path){
 	FILE* fileptr;
-	fileptr = fopen(path_thermal_zone, "r");
+	fileptr = fopen(file_path, "r");
     	if (fileptr == NULL) {
         	puts("file can not open \n");
     		return 0;
@@ -31,8 +28,16 @@ unsigned int read_thermal_zone(int zone_index){
     	char * buff = NULL;
     	size_t buff_size = 10;
     	getline(&buff, &buff_size, fileptr);
-   	
-   	printf("%s\n", buff);
     	fclose(fileptr);
-	return 10000;
+    	return buff;
+}
+
+Thermal_Zone_Data * read_thermal_zone(int zone_index){
+	char path_thermal_zone[MAX_USER_ZONES_NUMB] = "/sys/class/thermal/thermal_zone";
+	get_filename_idx(path_thermal_zone, zone_index);
+    	char * buff = read_data(path_thermal_zone);
+   	Thermal_Zone_Data *zone_data = malloc(sizeof(Thermal_Zone_Data));
+   	zone_data->index = zone_index;
+   	zone_data->temp = atoi(buff);
+	return zone_data;
 }
