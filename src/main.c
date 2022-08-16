@@ -8,7 +8,7 @@ void read_sensors(unsigned int numb_zones){
 	for (int i = 0; i < numb_zones; i++){
 		Thermal_Zone_Data *data = read_thermal_zone(i);
 		printf("Thermal_zone_%d\n", data->index);
-		printf("Temp: %d\n", data->temp);
+		printf("Temp: %.2lf *C\n", convert_m_cels_to_cels(data->temp));
 		free(data);
 	}
 

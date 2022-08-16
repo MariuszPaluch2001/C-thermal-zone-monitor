@@ -41,3 +41,7 @@ Thermal_Zone_Data * read_thermal_zone(int zone_index){
    	zone_data->temp = atoi(buff);
 	return zone_data;
 }
+
+double convert_m_cels_to_cels(int m_cels){
+	return (double) m_cels / 1000;
+}
