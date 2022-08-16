@@ -1,13 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> 
+
 #include "utils.h"
+
 void read_sensors(unsigned int numb_zones){
-	for (int i; i < numb_zones; i++){
+	for (int i = 0; i < numb_zones; i++){
 		Thermal_Zone_Data *data = read_thermal_zone(i);
 		printf("Thermal_zone_%d\n", data->index);
 		printf("Temp: %d\n", data->temp);
 		free(data);
 	}
+
+}
+
+void clear_screen(){
+	printf("\e[1;1H\e[2J");
 }
 int main(int argc, char* argv[]){
 	if (argc != 2){
@@ -23,6 +31,13 @@ int main(int argc, char* argv[]){
 		printf("%d args is too much.\n", numb_thermal_zones);
 		return 3;
 	}
-	read_sensors(numb_thermal_zones);
+	clear_screen();
+	while(1){
+
+		read_sensors(numb_thermal_zones);
+		fflush(stdout);
+		sleep(1);
+		clear_screen();
+	}
 	return 0;
 }
